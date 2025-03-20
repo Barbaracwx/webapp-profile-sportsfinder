@@ -11,7 +11,6 @@ interface User {
   gender: string;
   age: number;
   points: number;
-  location: string[];
 }
 
 declare global {
@@ -110,11 +109,15 @@ export default function Home() {
 
       if (data.success) {
         setUser({ ...user, displayName: displayName.trim(), gender: data.gender, age: data.age });
-        setNotification({ message: 'Profile saved successfully!', type: 'success' });        
-        setTimeout(() => setNotification(null), 3000);
+        setNotification({ message: 'Profile saved successfully!', type: 'success' });
+        setTimeout(() => {
+          setNotification(null); // Clear notification
 
-        // Navigate to /about/match-preferences after saving
-        router.push('/about/match-preferences');
+          // Close the Telegram Web App
+          if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+            window.Telegram.WebApp.close();
+          }
+        }, 1000);
       } else {
         setError('Failed to save profile');
       }
