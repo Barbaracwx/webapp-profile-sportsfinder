@@ -16,7 +16,6 @@ model User {
   displayName     String?  
   age             Int?
   gender          String?
-  location        String[]
   sports          Json?
   matchPreferences Json?
   isMatched       Boolean  @default(false) // Track if the user is in a match
